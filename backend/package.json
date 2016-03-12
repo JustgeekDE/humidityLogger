@@ -13,6 +13,11 @@
      "restify" : ">=4.0.0",
      "body-parser" : ">=1.15.0",
      "sqlite3" : ">=3.0.0"
-    }
+   },
+
+    "repository" :
+      { "type" : "git"
+      , "url" : "https://github.com/JustgeekDE/humidityLogger.git"
+      }
 
 }
