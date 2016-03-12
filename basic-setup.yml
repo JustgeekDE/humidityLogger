@@ -1,45 +1,41 @@
 - hosts: generic
   remote_user: pi
+  vars:
+    nodeVersion: node-v4.0.0-linux-armv6l
   tasks:
 
-  - name: Update apt
-    become: yes
-    apt: update_cache=yes
+- name: Update apt
+  become: yes
+  apt: update_cache=yes
 
-  - name: Update packages
-    become: yes
-    apt: upgrade=yes
+- name: Update packages
+  become: yes
+  apt: upgrade=yes
 
-  - name: remove unnecessary stuff
-    become: yes
-    apt: name={{ item }} state=absent purge=yes
-    with_items:
-      - wolfram-engine
+- name: remove unnecessary stuff
+  become: yes
+  apt: name={{ item }} state=absent purge=yes
+  with_items:
+    - wolfram-engine
 
-  - name: install tools
-    become: yes
-    apt: name={{ item }} state=latest
-    with_items:
-      - mc
-      - git-core
-      - nano
-      - screen
-      - apt-transport-https
+- name: install tools
+  become: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - mc
+    - git-core
+    - nano
+    - screen
+    - apt-transport-https
 
-  - name: add key for nodejs repo
+  - name: get node tarball
     become: yes
-    apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+    unarchive: src="https://nodejs.org/dist/v4.0.0/{{nodeVersion}}.tar.gz" dest="/usr/local/" copy=no creates="/usr/local/bin/node"
 
-  - name: add repo for nodejs
+  - name: link node
     become: yes
-    apt_repository: repo='deb https://deb.nodesource.com/node_4.x jessie main' state=present
+    file: src=/usr/local/{{nodeVersion}}/bin/node dest=/usr/local/bin/node state=link
 
-  - name: add src repo for nodejs
+  - name: link npm
     become: yes
-    apt_repository: repo='deb-src https://deb.nodesource.com/node_4.x jessie main' state=present
-
-  - name: install nodejs
-    become: yes
-    apt: name={{ item }} state=latest
-    with_items:
-      - nodejs
+    file: src=/usr/local/{{nodeVersion}}/bin/npm dest=/usr/local/bin/npm state=link
