@@ -27,6 +27,7 @@
       - nano
       - screen
       - apt-transport-https
+      - daemon
 
   - name: get node tarball
     become: yes
@@ -39,3 +40,12 @@
   - name: link npm
     become: yes
     file: src=/usr/local/{{nodeVersion}}/bin/npm dest=/usr/local/bin/npm state=link
+
+  - name: clone git repo
+    git: repo=git://github.com/JustgeekDE/humidityLogger.git dest=/home/pi/humidityLogger
+
+  - name: install node modules
+    command: npm install chdir=/home/pi/humidityLogger/backend
+
+  - name: start backend
+    shell: daemon -- node index.js chdir=/home/pi/humidityLogger/backend
