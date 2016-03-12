@@ -1,0 +1,18 @@
+{
+  "name": "genericDataLogger",
+  "version": "0.0.0",
+  "description": "Generic Webservice to log sensor data into a mongo db and display latest values",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philip Peter",
+  "license": "ISC",
+
+  "dependencies" :{
+     "restify" : ">=4.0.0",
+     "body-parser" : ">=1.15.0",
+     "sqlite3" : ">=3.0.0"
+    }
+
+}
