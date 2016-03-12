@@ -24,6 +24,7 @@
       - git-core
       - nano
       - screen
+      - apt-transport-https
 
   - name: add key for nodejs repo
     become: yes
@@ -35,7 +36,7 @@
 
   - name: add src repo for nodejs
     become: yes
-    apt_repository: repo='ddeb-src https://deb.nodesource.com/node_4.x jessie main' state=present
+    apt_repository: repo='deb-src https://deb.nodesource.com/node_4.x jessie main' state=present
 
   - name: install nodejs
     become: yes
