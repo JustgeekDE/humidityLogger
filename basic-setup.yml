@@ -4,29 +4,29 @@
     nodeVersion: node-v4.0.0-linux-armv6l
   tasks:
 
-- name: Update apt
-  become: yes
-  apt: update_cache=yes
+  - name: Update apt
+    become: yes
+    apt: update_cache=yes
 
-- name: Update packages
-  become: yes
-  apt: upgrade=yes
+  - name: Update packages
+    become: yes
+    apt: upgrade=yes
 
-- name: remove unnecessary stuff
-  become: yes
-  apt: name={{ item }} state=absent purge=yes
-  with_items:
-    - wolfram-engine
+  - name: remove unnecessary stuff
+    become: yes
+    apt: name={{ item }} state=absent purge=yes
+    with_items:
+      - wolfram-engine
 
-- name: install tools
-  become: yes
-  apt: name={{ item }} state=latest
-  with_items:
-    - mc
-    - git-core
-    - nano
-    - screen
-    - apt-transport-https
+  - name: install tools
+    become: yes
+    apt: name={{ item }} state=latest
+    with_items:
+      - mc
+      - git-core
+      - nano
+      - screen
+      - apt-transport-https
 
   - name: get node tarball
     become: yes
