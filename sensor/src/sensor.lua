@@ -3,7 +3,7 @@ local M = {}
 _G[moduleName] = M
 
 M.sensorPin = 4
-M.sensorIntervall = 1000
+M.sensorIntervall = 60000
 M.timer = 2
 
 function M.readSensor()
@@ -48,7 +48,7 @@ function M.sendOutSensorData()
 end
 
 function M.startSensor()
-    tmr.register(M.timer, 1000, tmr.ALARM_AUTO, function()
+    tmr.register(M.timer, M.sensorIntervall, tmr.ALARM_AUTO, function()
         M.sendOutSensorData()
     end)
     
