@@ -1,13 +1,11 @@
 
 var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser')
-//var express = require('express');
 var restify = require('restify');
+var util = require('util')
 
 var db = new sqlite3.Database(':memory:');
 
-//var app = express();
-//app.use(bodyParser.json())
 var server = restify.createServer();
 server.use(bodyParser.json())
 
@@ -69,6 +67,7 @@ server.get('/sensors', function (req, res, next) {
 
 
 server.post('/log', function (req, res, next) {
+  console.log("Got data:\n" + util.inspect(req.body, false, null))
   saveSensorData(req.body)
   res.send(req.body);
 });
