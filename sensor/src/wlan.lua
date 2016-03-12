@@ -22,8 +22,6 @@ function M.connect(ssid, password, callback)
 end
 
 function M.sendOutData(url, data)
---  print("Sending out data to " .. url)
---  print("payload: " .. data)
     http.post(url,
       'Content-Type: application/json\r\n',
       data,
