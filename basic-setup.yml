@@ -1,0 +1,44 @@
+- hosts: generic
+  remote_user: pi
+  tasks:
+
+  - name: Update apt
+    become: yes
+    apt: update_cache=yes
+
+  - name: Update packages
+    become: yes
+    apt: upgrade=yes
+
+  - name: remove unnecessary stuff
+    become: yes
+    apt: name={{ item }} state=absent purge=yes
+    with_items:
+      - wolfram-engine
+
+  - name: install tools
+    become: yes
+    apt: name={{ item }} state=latest
+    with_items:
+      - mc
+      - git-core
+      - nano
+      - screen
+
+  - name: add key for nodejs repo
+    become: yes
+    apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+
+  - name: add repo for nodejs
+    become: yes
+    apt_repository: repo='deb https://deb.nodesource.com/node_4.x jessie main' state=present
+
+  - name: add src repo for nodejs
+    become: yes
+    apt_repository: repo='ddeb-src https://deb.nodesource.com/node_4.x jessie main' state=present
+
+  - name: install nodejs
+    become: yes
+    apt: name={{ item }} state=latest
+    with_items:
+      - nodejs
