@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var restify = require('restify');
 var util = require('util')
 
-var db = new sqlite3.Database(':memory:');
+var db = new sqlite3.Database('default.sqlite');
 
 var server = restify.createServer();
 server.use(bodyParser.json())
