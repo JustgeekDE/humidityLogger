@@ -53,11 +53,17 @@
   - name: install node modules
     command: npm install chdir=/home/pi/humidityLogger/backend
 
-  - name: copy service
-    copy: src=/home/pi/humidityLogger/backend/humidityLoggerBackend.service dest=/etc/systemd/system/humidityLoggerBackend.service
+  - name: install node processs manager
+    become: yes
+    command: npm install pm2 -g chdir=/home/pi/humidityLogger/backend
 
-  - name: reload services
-    command: systemctl daemon-reload
+  - name: link pm2
+    become: yes
+    file: src=/usr/local/{{nodeVersion}}/bin/pm2 dest=/usr/local/bin/pm2 state=link
 
-  - name: start app
-    command: systemctl start humidityLoggerBackend
+  - name: add backend to node processs manager
+    command: pm2 start index.js chdir=/home/pi/humidityLogger/backend
+
+  - name: add pm2 as a system server
+    become: yes
+    command: pm2 startup systemd
