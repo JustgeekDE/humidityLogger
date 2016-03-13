@@ -28,6 +28,9 @@
       - screen
       - apt-transport-https
       - daemon
+      - build-essential
+      - python-dev
+      - sqlite3
 
   - name: get node tarball
     become: yes
@@ -44,8 +47,17 @@
   - name: clone git repo
     git: repo=git://github.com/JustgeekDE/humidityLogger.git dest=/home/pi/humidityLogger
 
+  - name: make node executable
+    file: path=/home/pi/humidityLogger/backend/index.js mode=u+rwx
+
   - name: install node modules
     command: npm install chdir=/home/pi/humidityLogger/backend
 
-  - name: start backend
-    shell: daemon -- node index.js chdir=/home/pi/humidityLogger/backend
+  - name: copy service
+    copy: src=/home/pi/humidityLogger/backend/humidityLoggerBackend.service dest=/etc/systemd/system/humidityLoggerBackend.service
+
+  - name: reload services
+    command: systemctl daemon-reload
+
+  - name: start app
+    command: systemctl start humidityLoggerBackend

@@ -1,4 +1,6 @@
 
+#!/usr/bin/env node
+
 var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser')
 var restify = require('restify');
