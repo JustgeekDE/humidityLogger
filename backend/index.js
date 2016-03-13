@@ -1,5 +1,4 @@
-
-#!/usr/bin/env node
+#!/usr/bin/env nodejs
 
 var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser')
